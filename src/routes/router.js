@@ -23,27 +23,42 @@ router
       console.log(resultados)
       if (!resultados) {
         // resultados obtenidos de la base de datos
-        res.send('Results not found')
+        return res.json({
+          status: 'Failure',
+          message: 'Data not found',
+        })
       } else {
-        res.json(resultados)
+        res.json({
+          status: 'Success',
+          message: 'Completed successfully',
+          data: resultados,
+        })
       }
     })
   })
 
   .post('/listados', (req, res) => {
-    res.send('Estás en el sector de listados - POST')
+    returnres.send('Estás en el sector de listados - POST')
   })
 
-  .get('/consultas/:nro', (req, info) => {
-    const { nro } = req.params
-    const sql = `SELECT id,nombre,apellido,edad FROM personas where id = ${nro} `
-    connection.query(sql, (error, resultados) => {
-      if (error) throw error
-      if (resultados.length > 0) {
-        // resultados obtenidos de la base de datos
-        info.json(resultados)
+  .get('/consultas/:id', (req, res) => {
+    const { id } = req.params
+    const sql = `SELECT id,nombre,apellido,edad FROM personas where id = ${id} `
+    connection.query(sql, (e, data) => {
+      if (e) return console.log(`error: ${e}`)
+      if (data.length > 0) {
+        // data obtenidos de la base de datos
+        return res.json({
+          status: 'Success',
+          message: 'Completed successfully',
+          data,
+        })
       } else {
-        info.send('No encontré datos en la BD')
+        return res.json({
+          status: 'Failure',
+          message: 'Data not found',
+          data,
+        })
       }
     })
   })
