@@ -4,9 +4,6 @@ const cors = require('cors')
 
 const router = require('./routes/router.js')
 
-// const mysql = require('mysql')
-// const myConnection = require('express-myconnection')
-
 const app = express()
 app.use(cors())
 app.use(morgan('dev'))
