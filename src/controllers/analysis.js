@@ -40,9 +40,9 @@ const getAnalysisById = async (req, res, next) => {
     const sql =
       'SELECT analysis_id,analysis_name, analysis_type_id,analysis_material, price FROM Analysis WHERE analysis_id = ?'
 
-    const [results] = await connection.promise().query(sql, [analysis_id])
+    const [result] = await connection.promise().query(sql, [analysis_id])
 
-    if (results.length === 0) {
+    if (result.length === 0) {
       const response = {
         status: 'error',
         message: 'Analysis not found',
@@ -52,8 +52,8 @@ const getAnalysisById = async (req, res, next) => {
     const response = {
       status: 'ok',
       message: 'Completed successfully',
-      results: results.length,
-      data: results,
+      results: result.length,
+      data: result,
     }
 
     return res.status(200).json(response)

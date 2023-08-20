@@ -34,5 +34,39 @@ const getNewAppointment = async (req, res, next) => {
     return res.status(500).json(response)
   }
 }
+const getAppointments = async (req, res, next) => {
+  const { patient_id } = req.params
+  try {
+    const sql = 'SELECT * FROM Analysis WHERE patient_id = ? '
+    const [result] = await connection.promise().query(sql, [patient_id])
 
-module.exports = { getNewAppointment }
+    if (result.length === 0) {
+      const response = {
+        status: 'error',
+        message: 'Patient not found',
+      }
+      return res.status(404).json(response)
+    }
+    const response = {
+      status: 'ok',
+      message: 'Completed successfully',
+      results: result.length,
+      data: result,
+    }
+    return res.status(200).json(response)
+  } catch (e) {
+    console.log(e)
+    const response = {
+      status: 'error',
+      code: e.code,
+      message: e.sqlMessage,
+    }
+
+    return res.status(500).json(response)
+  }
+}
+
+module.exports = {
+  getNewAppointment,
+  getAppointments,
+}
