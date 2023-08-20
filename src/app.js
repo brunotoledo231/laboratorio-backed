@@ -10,6 +10,8 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.set('port', process.env.PORT || 3000)
 
+app.disable('x-powered-by')
+
 app.use('/', router)
 
 module.exports = app
