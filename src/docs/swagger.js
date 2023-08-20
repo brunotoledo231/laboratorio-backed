@@ -17,11 +17,6 @@ const options = {
         'API used to obtain and manipulate information about patients, doctors, and more. ',
       contact: { name: 'Adriangln11' },
     },
-    servers: [
-      {
-        url: 'clinic-lab-api.onrender.com',
-      },
-    ],
   },
   apis: ['./src/routes/*.js'],
 }
