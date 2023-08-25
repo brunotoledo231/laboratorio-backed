@@ -1,11 +1,11 @@
 import {Router} from 'express'
-import { getAllAnalysisType } from '../controllers/analysisTypeController.js'
-
-import{createAnalysisTypeValidator} from '../middlewares/reqValidation.js'
+import { getAllAnalysisType,updateAnalysisType } from '../controllers/analysisTypeController.js'
+import{createAnalysisTypeValidator} from '../middlewares/analysisTypeValidation.js'
 
 
 const router = Router()
 
 router.get('/',getAllAnalysisType)
+router.put('/:id',createAnalysisTypeValidator,updateAnalysisType)
 
 export default router

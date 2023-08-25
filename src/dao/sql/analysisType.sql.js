@@ -3,7 +3,7 @@ import pool from "../../utils/db.js"
 class AnalysisType {
     constructor(){}
     create = async(analysisType) => {
-        const data = await pool.query('INSERT INTO Analysis_type (analysis_type_name) VALUES (?)', [analysisType.analysis_type_namee_number]) 
+        const data = await pool.query('INSERT INTO Analysis_type (analysis_type_name,analysis_type_price,analysis_type_materials) VALUES (?,?,?)', [analysisType.analysis_type_name,analysisType.analysis_type_price,analysisType.analysisType_materials]) 
         return data[0]
     }
     getAll = async() => {
@@ -19,7 +19,7 @@ class AnalysisType {
         return data[0]
     }
     update = async(analysis_type) => {
-        const data = await pool.query('UPDATE Analysis_type SET analysis_type=? WHERE id =?', [analysis_type, analysis_type.analysis_type_id])
+        const data = await pool.query('UPDATE Analysis_type SET analysis_type_name=?, analysis_type_price=?, analysis_type_materials=? WHERE analysis_type_id=?', [analysis_type.analysis_type_name, analysis_type.analysis_type_price, analysis_type.analysis_type_materials, analysis_type.analysis_type_id])
         return data[0]
     }
 }

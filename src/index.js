@@ -19,6 +19,7 @@ app.use(express.urlencoded({extended: true}))
 app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerSpecs))
 
 app.use('/api/analysisType', analysisTypeRoute)
+app.use('/api/analysisType',analysisTypeRoute)
 app.use('/api/users', usersRoute)
 app.use('/', (req, res) => {
     res.json({

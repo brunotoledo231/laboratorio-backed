@@ -52,3 +52,23 @@ export const getAllAnalysisType = async(req,res,next) => {
         })
     }
 }
+export const updateAnalysisType = async (req, res, next) => {
+    const analysisTypeId = req.params.id; // ID del analysis_type a actualizar
+    const updatedAnalysisTypeData = req.body; // Datos actualizados
+
+    try {
+        const updatedData = await AnalysisTypeService.updateAnalysisType(analysisTypeId, updatedAnalysisTypeData);
+        res.json({
+            status: 'OK',
+            payload: updatedData
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: 'failed',
+            payload: {
+                message: error.message,
+                stack: error.stack
+            }
+        });
+    }
+};
