@@ -7,6 +7,8 @@ import usersRoute from './routes/users.route.js'
 import swaggerUiExpress from "swagger-ui-express";
 import swaggerSpecs from './utils/swagger.js';
 import config from './config/config.js';
+import { updateAnalysisType } from './controllers/analysisTypeController.js';
+import { updateUser } from './controllers/userController.js';
 
 const app = express();
 const port = config.port
@@ -18,8 +20,10 @@ app.use(express.urlencoded({extended: true}))
 
 app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerSpecs))
 
-app.use('/api/analysisType', analysisTypeRoute)
+
 app.use('/api/analysisType',analysisTypeRoute)
+app.put('/api/analysisType/:id', updateAnalysisType);
+app.put('/api/users/:id',updateUser)
 app.use('/api/users', usersRoute)
 app.use('/', (req, res) => {
     res.json({

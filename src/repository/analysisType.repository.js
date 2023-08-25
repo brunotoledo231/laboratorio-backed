@@ -17,7 +17,7 @@ export default class AnalysisTypeRepository {
     getAnalysisByName = async(name) => {
         return await this.analysisType.getAnalysisByName(name)
     }
-    updateAnalysisType=async(analysisType)=>{
+    update=async(analysisType)=>{
         return await this.analysisType.updateAnalysisType(analysisType)
     }
 

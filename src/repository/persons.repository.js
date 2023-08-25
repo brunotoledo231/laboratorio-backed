@@ -17,4 +17,7 @@ export default class PersonRepository {
     getPersonById = async(id) => {
         return await this.person.getOneById(id)
     }
+    updatePerson=async(updatedPerson)=>{
+        return await this.person.update(updatedPerson)
+    }
 }

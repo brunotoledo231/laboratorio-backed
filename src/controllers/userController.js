@@ -47,6 +47,54 @@ export const createUser = async(req,res,next) => {
     }
  }
 
+ export const updateUser = async (req, res, next) => {
+    const { errors } = validationResult(req);
+    if (errors.length > 0) {
+        return res.status(400).json({
+            status: 'failed',
+            payload: errors
+        });
+    }
+
+    const userId = req.params.id; // Obtener el ID del usuario de los parámetros de la URL
+
+    const userDataToUpdate = {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        birth_date: req.body.birth_date,
+        address: req.body.address,
+        phone_number: req.body.phone_number
+    };
+
+    try {
+        const updatedRows = await UserService.updateUser(userId, userDataToUpdate);
+
+        if (updatedRows === 0) {
+            return res.status(404).json({
+                status: 'failed',
+                payload: {
+                    message: 'User not found'
+                }
+            });
+        }
+
+        res.json({
+            status: 'OK',
+            payload: {
+                message: 'User updated successfully'
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: 'failed',
+            payload: {
+                message: error.message,
+                stack: error.stack
+            }
+        });
+    }
+};
+
 export const logIn = async(req,res,next) => {
     const {errors} = validationResult(req)
     if (errors.length > 0) {

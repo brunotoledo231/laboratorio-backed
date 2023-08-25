@@ -19,7 +19,7 @@ class Person {
         return data[0]
     }
     update = async(person) => {
-        const data = await pool.query('UPDATE Persons SET person=? WHERE id =?', [person, person.person_id])
+        const data = await pool.query('UPDATE Persons SET first_name=?, last_name=?, birth_date=?, address=?, phone_number=? WHERE person_id =?', [person.first_name, person.last_name, person.birth_date, person.address, person.phone_number, person.person_id])
         return data[0]
     }
 }
