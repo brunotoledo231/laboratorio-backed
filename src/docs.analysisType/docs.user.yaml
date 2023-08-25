@@ -1,0 +1,192 @@
+openapi: 3.0.3
+info:
+  title: Hospital Project API Documentation
+  description: |-
+    Documentacion oficial del proyecto
+  contact:
+    email: ignaciorossetto@hotmail.com
+  version: 1.0.0
+servers:
+  - url: https://institutoweb-hospital-backend.onrender.com/
+tags:
+  - name: user
+    description: Operations about user
+paths:
+  /api/user:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: Inserts a row in person table and after that inserts a row into users table.
+      operationId: createUser
+      requestBody:
+        description: Requested body json object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200": 
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    example: OK
+                  payload:
+                    type: object
+                    example:
+                      user_id: 1
+        "400": 
+          description: validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    example: failed
+                  payload:
+                    type: object
+                    example:
+                      errors: {}
+        "500": 
+          description: server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    example: failed
+                  payload:
+                    type: Object
+                    example: {
+                      message: 'error message',
+                      stack: 'error stack'
+                    }
+  /api/user/login:
+    post:
+      tags:
+        - user
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      requestBody:
+        description: Requested body json object
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: juanperez@gmail.com
+                password: 
+                  type: string
+                  example: Secret123!
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id: 
+                    type: number
+                    example: 1
+                  email:
+                    type: string
+                    example: juanperez@gmail.com
+                  role_id:
+                    type: number
+                    example: 1
+                  person_id:
+                    type: number
+                    example: 5 
+                    
+        '400':
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  payload:
+                    type: object
+                    example: {
+                      error: 'error'
+                    } 
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  payload:
+                    type: object
+                    example: {
+                      error: 'error'
+                    } 
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: Juan
+        last_name:
+          type: string
+          example: Perez
+        birth_date:
+          type: string
+          format: yyyy-mm-dd
+          example: 2023-05-05
+        address:
+          type: string
+          example: av. cabildo 1100
+        phone:
+          type: string
+          example: '+5493516338545'
+        dni:
+          type: integer
+          format: int64
+          example: 38458694
+        gender_id:
+          type: integer
+          format: int64
+          example: 7
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          description: Must have at least one upper,lower,number and special char.
+          example: 'Secret!123'
+        role_id:
+          type: integer
+          format: int64
+          example: 5
+      xml:
+        name: user
