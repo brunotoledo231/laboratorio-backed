@@ -11,6 +11,10 @@ export default class UserRepository {
         const newUser = new userDTO(user)
         return await this.user.create(newUser)
     }
+    updateUser=async(id,updateUserData)=>{
+        return await this.user.update(id,updateUserData)
+    }
+    
     getUserByEmail = async(email) => {
         return await this.user.getOneByEmail(email)
     }

@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import {UserService} from '../repository/index.js'
+import { UserService } from '../repository/index.js'
 import { PersonService } from '../repository/index.js';
 import { comparePassword, hashPassword } from '../utils/hashedPass.js';
 
@@ -45,9 +45,11 @@ export const createUser = async(req,res,next) => {
             }
         })
     }
- }
+}
 
- export const updateUser = async (req, res, next) => {
+ 
+
+export const updateUser = async (req, res, next) => {
     const { errors } = validationResult(req);
     if (errors.length > 0) {
         return res.status(400).json({
@@ -93,7 +95,7 @@ export const createUser = async(req,res,next) => {
             }
         });
     }
-};
+}
 
 export const logIn = async(req,res,next) => {
     const {errors} = validationResult(req)

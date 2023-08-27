@@ -1,5 +1,20 @@
 import {body } from 'express-validator'
 
+export const updateUserValidator = [
+    /*person*/
+    body('first_name').notEmpty().withMessage('first_name cant be empty!')
+    .isString().withMessage('first_name must be string!'),
+    body('last_name').notEmpty().withMessage('last_name cant be empty!')
+    .isString().withMessage('last_name must be string!'),
+    body('birth_date').notEmpty().withMessage('birth_date cant be empty!')
+    .isISO8601().withMessage('Enter a valid "YYYY-MM-DD" date'),
+    body('address').notEmpty().withMessage('address cant be empty!')
+    .isString().withMessage('address must be string!'),
+    body('phone_number').notEmpty().withMessage('phone_number cant be empty!')
+    .isNumeric().withMessage('phone_number must be a number!'),   
+    body('gender_id').notEmpty().withMessage('gender_id cant be empty!')
+    .isNumeric().withMessage('gender_id must be a number!')    
+]
 
 
 
