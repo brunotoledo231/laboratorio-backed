@@ -17,7 +17,14 @@ export default class PersonRepository {
     getPersonById = async(id) => {
         return await this.person.getOneById(id)
     }
-    updatePerson=async(updatedPerson)=>{
-        return await this.person.update(updatedPerson)
+    updatePerson=async(personId,updatedPerson)=>{
+        try{
+            const updated=await this.person.update(personId,updatedPerson);
+            return updated;
+        }catch(error){
+            throw error;
+        }
     }
+
+   
 }

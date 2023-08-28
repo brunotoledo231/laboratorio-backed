@@ -1,9 +1,11 @@
 import userDTO from '../dao/dto/UserDTO.js'
 
+
 export default class UserRepository {
     constructor(user) {
         this.user = user
     }
+   
     getAllUsers = async() => {
         return await this.user.getAll()
     }
@@ -11,9 +13,14 @@ export default class UserRepository {
         const newUser = new userDTO(user)
         return await this.user.create(newUser)
     }
-    updateUser=async(id,updateUserData)=>{
-        return await this.user.update(id,updateUserData)
-    }
+    updateUser = async (userName, updatedUserData) => {
+        try {
+            const updated = await this.user.update(userName, updatedUserData);
+            return updated;
+        } catch (error) {
+            throw error;
+        }
+    };
     
     getUserByEmail = async(email) => {
         return await this.user.getOneByEmail(email)

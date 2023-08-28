@@ -9,5 +9,6 @@ export default class personDTO {
         this.birth_date = person.birth_date
         this.gender_id = person.gender_id
     }
+   
 }
  

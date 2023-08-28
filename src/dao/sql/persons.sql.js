@@ -7,6 +7,7 @@ class Person {
         return data[0]
     }
     getAll = async() => {
+        console.log('DAO CRUD getAll method called')
         const data = await pool.query('SELECT * FROM Persons')
         return data
     }
@@ -14,14 +15,27 @@ class Person {
         const data = await pool.query('SELECT * FROM Persons WHERE id =?', [id])
         return data[0]
     }
-    getOneByEmail = async(email) => {
-        const data = await pool.query('SELECT * FROM Persons WHERE email =?', [email])
-        return data[0]
+    
+    update = async(personId,person) => {
+        try{
+            if(typeof personId !=='number'){
+                throw new Error('Invalid personId')
+            }
+            if(personId===null|| personId ===undefined){
+                throw new Error('id cannot be empty or null');
+            }
+            const data = await pool.query('UPDATE Persons SET first_name=?, last_name=?, birth_date=?, address=?, phone_number=? WHERE person_id =?', [person.first_name, person.last_name, person.birth_date, person.address, person.phone_number, personId])
+            
+            
+            if (data.affectedRows === 0) {
+                throw new Error('Person not found');
+            }
+            return true;
+        }catch(error){
+            throw error;
+        }
     }
-    update = async(person) => {
-        const data = await pool.query('UPDATE Persons SET first_name=?, last_name=?, birth_date=?, address=?, phone_number=? WHERE person_id =?', [person.first_name, person.last_name, person.birth_date, person.address, person.phone_number, person.person_id])
-        return data[0]
-    }
+
 }
 
 export const person = new Person()
