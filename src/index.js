@@ -9,7 +9,7 @@ import swaggerUiExpress from "swagger-ui-express";
 import swaggerSpecs from './utils/swagger.js';
 import config from './config/config.js';
 import { updateAnalysisType } from './controllers/analysisTypeController.js';
-import { getUserByEmail, getUserById, updateUser } from './controllers/userController.js';
+import { getUserByEmail, getUserById, updateUser,deleteUserById } from './controllers/userController.js';
 import { updatePerson } from './controllers/personController.js';
 
 
@@ -28,6 +28,8 @@ app.use('/api/users', usersRoute);
 app.use('/api/users/id/:id', getUserById);
 app.use('/api/users/email/:email',getUserByEmail)
 app.use('/api/users/email/:email',updateUser)
+app.use('/api/users/delete/id/:id',deleteUserById)
+app.use('/api/users/inverseDelete/id/:id',deleteUserById)
 
 app.use('/api/persons', personsRoute);
 app.use('/api/persons/id/:id',updatePerson)

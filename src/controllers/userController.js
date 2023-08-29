@@ -2,6 +2,8 @@ import { validationResult } from 'express-validator';
 import { UserService } from '../repository/index.js'
 import { PersonService } from '../repository/index.js';
 import { comparePassword, hashPassword } from '../utils/hashedPass.js';
+import { parse, format } from 'date-fns';
+
 
 export const createUser = async(req,res,next) => { 
     const {errors} = validationResult(req)
@@ -26,6 +28,11 @@ export const createUser = async(req,res,next) => {
         role_id: req.body.role_id,
         person_id: null
     }
+
+    const parsedDate = parse(personInfo.birth_date, 'dd-MM-yyyy', new Date());
+    const formattedBirthDate = format(parsedDate, 'yyyy-MM-dd');
+    personInfo.birth_date = formattedBirthDate;
+
     try {
         const {insertId} = await PersonService.createPerson(personInfo)
         const hashedPass = hashPassword(userInfo.password)
@@ -49,16 +56,16 @@ export const createUser = async(req,res,next) => {
 
 
 export const updateUser = async (req, res, next) => {
-    const { errors } = validationResult(req);
-
+    const {errors} = validationResult(req)
     if (errors.length > 0) {
         return res.status(400).json({
             status: 'failed',
             payload: errors
-        });
+        })
     }
 
     const userName = req.params.email;
+   
 
     try {
         const { password } = req.body;
@@ -197,3 +204,66 @@ export const getUserByEmail=async(req,res,next)=>{
     }
 }
 
+export const deleteUserById = async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+
+        const deleted = await UserService.deleteUserById(userId);
+
+        if (!deleted) {
+            return res.status(404).json({
+                status: 'failed',
+                payload: {
+                    message: 'User not found'
+                }
+            });
+        }
+
+        return res.json({
+            status: 'OK',
+            payload: {
+                message: 'the user is inactive'
+            }
+        });
+    } catch(error){
+        res.status(500).json({
+            status:'failed',
+            payload:{
+                message:error.message,
+                stack:error.stack
+            }
+        })
+    }
+};
+
+export const inverseDeleteUserById = async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+
+        const deleted = await UserService.inverseDeleteUserById(userId);
+
+        if (!deleted) {
+            return res.status(404).json({
+                status: 'failed',
+                payload: {
+                    message: 'User not found'
+                }
+            });
+        }
+
+        return res.json({
+            status: 'OK',
+            payload: {
+                message: 'the user is active'
+            }
+        });
+    } catch(error){
+        res.status(500).json({
+            status:'failed',
+            payload:{
+                message:error.message,
+                stack:error.stack
+            }
+        })
+    }
+};

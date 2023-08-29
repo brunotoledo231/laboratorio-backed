@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator';
 import { PersonService } from '../repository/index.js';
+import { format, parse } from 'date-fns'; // Importa format y parseISO desde date-fns
 
 
 export const createPerson = async(req,res,next) => { 
@@ -19,9 +20,17 @@ export const createPerson = async(req,res,next) => {
         dni: req.body.dni,
         gender_id: req.body.gender_id
     }
+    const parsedDate = parse(personInfo.birth_date, 'dd-MM-yyyy', new Date());
+    const formattedBirthDate = format(parsedDate, 'yyyy-MM-dd');
+    personInfo.birth_date = formattedBirthDate;
     
     try {
-        const {insertId} = await PersonService.createPerson(personInfo) 
+
+        // Utiliza formattedBirthDate en la creación del usuario
+        const { insertId } = await PersonService.createPerson({
+            ...personInfo,
+            birth_date: formattedBirthDate // Asigna la fecha formateada
+        });         
         
         return res.json({
             status: 'OK',
@@ -57,6 +66,10 @@ export const updatePerson = async (req, res, next) => {
         address: req.body.address,
         phone_number: req.body.phone_number,       
     };
+
+    const parsedDate = parse(personInfo.birth_date, 'dd-MM-yyyy', new Date());
+    const formattedBirthDate = format(parsedDate, 'yyyy-MM-dd');
+    personInfo.birth_date = formattedBirthDate;
 
     try {
         const updated = await PersonService.updatePerson(personId, updatedPersonData);

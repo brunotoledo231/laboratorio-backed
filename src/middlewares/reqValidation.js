@@ -1,4 +1,6 @@
 import {body } from 'express-validator'
+import { format, parse } from 'date-fns';
+
 
 export const updateUserValidator = [
     /*person*/
@@ -21,14 +23,23 @@ export const createUserValidator = [
     .isString().withMessage('first_name must be string!'),
     body('last_name').notEmpty().withMessage('last_name cant be empty!')
     .isString().withMessage('last_name must be string!'),
-    body('birth_date').notEmpty().withMessage('birth_date cant be empty!')
-    .isISO8601().withMessage('Enter a valid "YYYY-MM-DD" date'),
+    body('birth_date')
+    .notEmpty().withMessage('birth_date cant be empty!')
+    .custom((value, { req }) => {
+        const parsedDate = parse(value, 'dd-MM-yyyy', new Date());
+        if (!isNaN(parsedDate) && parsedDate.getDate() && parsedDate.getMonth() + 1 && parsedDate.getFullYear()) {
+            req.body.birth_date = format(parsedDate, 'yyyy-MM-dd');
+            return true;
+        }
+        throw new Error('Enter a valid "dd-MM-yyyy" date');
+    }),
     body('address').notEmpty().withMessage('address cant be empty!')
     .isString().withMessage('address must be string!'),
     body('phone_number').notEmpty().withMessage('phone_number cant be empty!')
     .isNumeric().withMessage('phone_number must be a number!'),
-    body('dni').notEmpty().withMessage('dni cant be empty!')
-    .isNumeric().withMessage('dni must be a number!'),
+    body('dni').notEmpty().withMessage('dni cant be empty!')//colocar rango de digitos de 7 a 8 digitos 
+    .isNumeric().withMessage('dni must be a number!')
+    .isLength({ min: 7, max: 8 }).withMessage('dni must be between 7 and 8 digits long'),
     body('gender_id').notEmpty().withMessage('gender_id cant be empty!')
     .isNumeric().withMessage('gender_id must be a number!')
     .isIn([5,7,8,9]).withMessage('gender_id must be a valid number value from genders table!'),
@@ -60,8 +71,16 @@ export const createPersonValidator = [
     .isString().withMessage('first_name must be string!'),
     body('last_name').notEmpty().withMessage('last_name cant be empty!')
     .isString().withMessage('last_name must be string!'),
-    body('birth_date').notEmpty().withMessage('birth_date cant be empty!')
-    .isISO8601().withMessage('Enter a valid "YYYY-MM-DD" date'),
+    body('birth_date')
+    .notEmpty().withMessage('birth_date cant be empty!')
+    .custom((value, { req }) => {
+        const parsedDate = parse(value, 'dd-MM-yyyy', new Date());
+        if (!isNaN(parsedDate) && parsedDate.getDate() && parsedDate.getMonth() + 1 && parsedDate.getFullYear()) {
+            req.body.birth_date = format(parsedDate, 'yyyy-MM-dd');
+            return true;
+        }
+        throw new Error('Enter a valid "dd-MM-yyyy" date');
+    }),
     body('address').notEmpty().withMessage('address cant be empty!')
     .isString().withMessage('address must be string!'),
     body('phone_number').notEmpty().withMessage('phone_number cant be empty!')

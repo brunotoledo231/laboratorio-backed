@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {getAllUsers, createUser, logIn, getUserById, getUserByEmail, updateUser} from '../controllers/userController.js'
+import {getAllUsers, createUser, logIn, getUserById, getUserByEmail, updateUser, deleteUserById, inverseDeleteUserById} from '../controllers/userController.js'
 
 import { createUserValidator, logInValidator, updateUserValidator } from '../middlewares/reqValidation.js'
 
@@ -12,6 +12,7 @@ router.get('/email/:email', getUserByEmail);
 router.put('/email/:email',updateUserValidator,updateUser)
 router.post('/', createUserValidator, createUser);
 router.post('/login', logInValidator, logIn);
-
+router.delete('/delete/id/:id',deleteUserById)
+router.delete('/inverseDelete/id/:id',inverseDeleteUserById)
 
 export default router

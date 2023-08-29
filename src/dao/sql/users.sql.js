@@ -4,6 +4,13 @@ class User {
     constructor(){}
     create = async(user) => {
         console.log('DTO: ', user)
+
+        // Verificar si el email ya está registrado
+        const existingUser = await this.getOneByEmail(user.email);
+        if (existingUser) {
+            throw new Error('Email already exists');
+        }
+        
         const data = await pool.query('INSERT INTO Users (email, password, person_id, role_id) VALUES (?, ?, ?, ?)', [user.email, user.password, user.person_id, user.role_id]) 
         return data[0]
     }
@@ -51,7 +58,12 @@ class User {
     }
 
     delete = async(id) => {
-        await pool.query('DELETE FROM Users WHERE id =?', [id])
+        await pool.query('update Users set user_active=1 WHERE user_id =?', [id])
+        return true
+    }
+
+    inverseDelete = async(id) => {
+        await pool.query('update Users set user_active=0 WHERE user_id =?', [id])
         return true
     }
 }

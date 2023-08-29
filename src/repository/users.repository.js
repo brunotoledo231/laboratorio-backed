@@ -31,4 +31,8 @@ export default class UserRepository {
     deleteUserById = async(id) => {
         return await this.user.delete(id)
     }
+
+    inverseDeleteUserById = async(id) => {
+        return await this.user.inverseDelete(id)
+    }
 }
