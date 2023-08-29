@@ -236,7 +236,7 @@ export const deleteUserById = async (req, res, next) => {
     }
 };
 
-export const inverseDeleteUserById = async (req, res, next) => {//para volver a estar activo el usuario
+export const inverseDeleteUserById = async (req, res, next) => {//para volver a estar activo el usuarios
     try {
         const userId = req.params.id;
 
