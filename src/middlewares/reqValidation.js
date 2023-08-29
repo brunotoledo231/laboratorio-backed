@@ -93,6 +93,29 @@ export const createPersonValidator = [
    
 ]
 
+export const updatePersonValidator = [
+    /*person*/
+    body('first_name').notEmpty().withMessage('first_name cant be empty!')
+    .isString().withMessage('first_name must be string!'),
+    body('last_name').notEmpty().withMessage('last_name cant be empty!')
+    .isString().withMessage('last_name must be string!'),
+    body('birth_date')
+    .notEmpty().withMessage('birth_date cant be empty!')
+    .custom((value, { req }) => {
+        const parsedDate = parse(value, 'dd-MM-yyyy', new Date());
+        if (!isNaN(parsedDate) && parsedDate.getDate() && parsedDate.getMonth() + 1 && parsedDate.getFullYear()) {
+            req.body.birth_date = format(parsedDate, 'yyyy-MM-dd');
+            return true;
+        }
+        throw new Error('Enter a valid "dd-MM-yyyy" date');
+    }),
+    body('address').notEmpty().withMessage('address cant be empty!')
+    .isString().withMessage('address must be string!'),
+    body('phone_number').notEmpty().withMessage('phone_number cant be empty!')
+    .isNumeric().withMessage('phone_number must be a number!')   
+]
+
+
 
 
 
