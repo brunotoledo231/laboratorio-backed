@@ -2,18 +2,27 @@ import pool from "../../utils/db.js"
 
 class User {
     constructor(){}
-    create = async(user) => {
-        console.log('DTO: ', user)
+    create = async (user) => {
+        console.log('DTO: ', user);
 
         // Verificar si el email ya está registrado
         const existingUser = await this.getOneByEmail(user.email);
-        if (existingUser) {
+        console.log('Existing user:', existingUser);
+        
+        if (existingUser.length > 0) {
             throw new Error('Email already exists');
         }
         
-        const data = await pool.query('INSERT INTO Users (email, password, person_id, role_id) VALUES (?, ?, ?, ?)', [user.email, user.password, user.person_id, user.role_id]) 
-        return data[0]
+
+        const data = await pool.query(
+            'INSERT INTO Users (user_active, email, password, person_id, role_id) VALUES (?, ?, ?, ?, ?)',
+            [0, user.email, user.password, user.person_id, user.role_id]
+        );
+        return data[0];
     }
+
+    
+
     getAll = async() => {
         console.log('DAO CRUD getAll method called')
         const data = await pool.query('SELECT * FROM Users')

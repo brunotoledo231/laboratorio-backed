@@ -35,10 +35,12 @@ export const createUser = async(req,res,next) => {
 
     try {
         const {insertId} = await PersonService.createPerson(personInfo)
+        console.log(insertId);
         const hashedPass = hashPassword(userInfo.password)
         userInfo.person_id = insertId
         userInfo.password = hashedPass
         const data = await UserService.createUser(userInfo)
+        console.log(data);
         return res.json({
             status: 'OK',
             payload: {user_id: data.insertId}
