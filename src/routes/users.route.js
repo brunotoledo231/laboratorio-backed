@@ -9,7 +9,7 @@ const router = Router()
 router.get('/', getAllUsers);
 router.get('/id/:id', getUserById);
 router.get('/email/:email', getUserByEmail);
-router.put('/email/:email',updateUserValidator,updateUser)
+router.patch('/email/:email',updateUserValidator,updateUser)
 router.post('/', createUserValidator, createUser);
 router.post('/login', logInValidator, logIn);
 router.delete('/delete/id/:id',deleteUserById)
