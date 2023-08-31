@@ -14,7 +14,7 @@ app.set('port', process.env.PORT || 3000);
 
 app.disable('x-powered-by');
 
-app.use('/getAnalysis', analysisRouter);
+app.use('/analysis', analysisRouter);
 app.use('/patient', patientRouter);
 app.use('/doctor', doctorRouter);
 
