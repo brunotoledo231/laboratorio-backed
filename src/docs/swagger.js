@@ -41,7 +41,7 @@ const swagger = (app, port) => {
     res.send(swaggerSpec)
   })
   console.log(
-    '📚 Documentation is available at https://clinic-lab-api.onrender.com/api/docs/v1/'
+    '📚 Documentation is available at https://clinic-lab-api.onrender.com/api/docs/'
   )
 }
 
