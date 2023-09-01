@@ -267,7 +267,7 @@ const getAnalysisByIdDocs = {
     },
   },
 }
-const deleteAppointmentDocs = {
+const patientDeleteAppointmentDocs = {
   '/patient/{patient_id}/appointments/{appointment_id}': {
     delete: {
       summary: 'Delete an appointment',
@@ -321,11 +321,66 @@ const deleteAppointmentDocs = {
     },
   },
 }
+const doctorDeleteAppointmentDocs = {
+  '/doctor/{doctor_id}/appointments/{appointment_id}': {
+    delete: {
+      summary: 'Delete an appointment',
+      tags: ['Doctor'],
+      parameters: [
+        {
+          in: 'path',
+          name: 'doctor_id',
+          required: true,
+          schema: {
+            type: 'integer',
+          },
+          description: 'Doctor identifier',
+        },
+        {
+          in: 'path',
+          name: 'appointment_id',
+          required: true,
+          schema: {
+            type: 'integer',
+          },
+          description: 'Appointment id to delete',
+        },
+      ],
+      responses: {
+        200: {
+          description: 'OK',
+          content: {
+            'application/json': {
+              example: {
+                status: 'ok',
+                message: 'Appointment deleted successfully',
+                affectedRows: 1,
+              },
+            },
+          },
+        },
+        500: {
+          description: 'Server error',
+          content: {
+            'application/json': {
+              example: {
+                status: 'error',
+                code: 'E12345',
+                message: 'Error processing the query',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+}
 
 module.exports = {
   newAppointmentDocs,
   getAppointmentsDocs,
   getAllAnalysisDocs,
   getAnalysisByIdDocs,
-  deleteAppointmentDocs,
+  patientDeleteAppointmentDocs,
+  doctorDeleteAppointmentDocs,
 }
