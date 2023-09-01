@@ -5,6 +5,7 @@ const {
   getAppointmentsDocs,
   getAllAnalysisDocs,
   getAnalysisByIdDocs,
+  deleteAppointmentDocs,
 } = require('./docs.js')
 
 const options = {
@@ -28,6 +29,7 @@ swaggerSpec.paths = {
   ...getAppointmentsDocs,
   ...getAllAnalysisDocs,
   ...getAnalysisByIdDocs,
+  ...deleteAppointmentDocs,
 }
 
 const swagger = (app, port) => {
