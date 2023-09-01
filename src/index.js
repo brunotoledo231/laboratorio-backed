@@ -6,6 +6,7 @@ app
     res.json({
       status: 'Success',
       message: 'Lab API',
+      docs: 'https://clinic-lab-api.onrender.com/api/docs/',
     })
   })
 
@@ -14,7 +15,6 @@ app
     return res.json({
       status: 'Success',
       message: 'Hello API',
-      docs: 'https://clinic-lab-api.onrender.com/api/docs/',
     })
   })
 
