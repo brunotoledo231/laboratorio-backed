@@ -10,10 +10,24 @@ const getNewAppointment = async (req, res, next) => {
     const [result] = await connection
       .promise()
       .query(sql, [newDate, patient_id, analysisId]);
+
+    if (result.affectedRows === 0) {
+      const response = {
+        status: 'error',
+        message: 'wrong identifier',
+      };
+      return res.json(response);
+    }
+    const sql2 =
+      'SELECT analysis_id, appointment_date, appointment_observation, patient_id FROM Appointments WHERE patient_id = ? AND analysis_id = ?';
+    const [result2] = await connection
+      .promise()
+      .query(sql2, [patient_id, analysisId]);
     const response = {
       status: 'ok',
       message: 'updated successfully',
       affectedRows: result.affectedRows,
+      data: result2[0],
     };
     return res.status(200).json(response);
   } catch (e) {
@@ -80,7 +94,6 @@ const deleteAppointment = async (req, res) => {
     };
     return res.status(200).json(response);
   } catch (e) {
-    console.log(e);
     const response = {
       status: 'error',
       code: e.code,

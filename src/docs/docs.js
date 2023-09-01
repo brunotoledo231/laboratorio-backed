@@ -1,5 +1,5 @@
 const newAppointmentDocs = {
-  '/patient/{patient_id}/new-appointment': {
+  '/patient/{patient_id}/new': {
     patch: {
       summary: 'Update the date of an appointment',
       tags: ['Patient'],
@@ -21,16 +21,16 @@ const newAppointmentDocs = {
             schema: {
               type: 'object',
               properties: {
-                date: {
+                newDate: {
                   type: 'string',
                   format: 'date',
                   example: '2023-08-07',
                   description: 'New date appointment',
                 },
-                analysisName: {
-                  type: 'string',
-                  example: 'Análisis de muestra',
-                  description: 'Analysis name',
+                analysisId: {
+                  type: 'integer',
+                  example: 11,
+                  description: 'Analysis identifier',
                 },
               },
             },
@@ -44,15 +44,14 @@ const newAppointmentDocs = {
             'application/json': {
               example: {
                 status: 'ok',
-                message: '1 rows affected',
-                result: [
-                  {
-                    analysis_id: 123,
-                    patient_id: 456,
-                    analysis_name: 'Análisis de muestra',
-                    analysis_date: '2023-08-07T00:00:00.000Z',
-                  },
-                ],
+                message: 'updated successfully',
+                affectedRows: 1,
+                data: {
+                  analysis_id: 1,
+                  appointment_date: '2023-09-09T06:00:00.000Z',
+                  appointment_observation: 'Observaciones adicionale',
+                  patient_id: 1,
+                },
               },
             },
           },
@@ -72,7 +71,7 @@ const newAppointmentDocs = {
       },
     },
   },
-}
+};
 const getAppointmentsDocs = {
   '/patient/{patient_id}/appointments': {
     get: {
@@ -97,19 +96,14 @@ const getAppointmentsDocs = {
               example: {
                 status: 'ok',
                 message: 'Completed successfully',
-                results: 2,
+                results: 1,
                 data: [
                   {
-                    analysis_id: 123,
-                    patient_id: 456,
-                    analysis_name: 'Análisis de muestra',
-                    analysis_date: '2023-08-07T00:00:00.000Z',
-                  },
-                  {
-                    analysis_id: 124,
-                    patient_id: 456,
-                    analysis_name: 'Otro análisis',
-                    analysis_date: '2023-08-08T00:00:00.000Z',
+                    appointment_id: 6,
+                    analysis_id: 1,
+                    appointment_date: '2023-09-09T06:00:00.000Z',
+                    appointment_observation: 'Observaciones adicionale',
+                    patient_id: 1,
                   },
                 ],
               },
@@ -122,7 +116,7 @@ const getAppointmentsDocs = {
             'application/json': {
               example: {
                 status: 'error',
-                message: 'Patient not found',
+                message: 'wrong identifier',
               },
             },
           },
@@ -142,9 +136,9 @@ const getAppointmentsDocs = {
       },
     },
   },
-}
+};
 const getAllAnalysisDocs = {
-  '/getAnalysis/': {
+  '/analisys/': {
     get: {
       summary: 'Get all analysis documents',
       tags: ['Analysis'],
@@ -159,18 +153,22 @@ const getAllAnalysisDocs = {
                 results: 2,
                 data: [
                   {
-                    analysis_id: 123,
-                    analysis_name: 'Análisis 1',
                     analysis_type_id: 1,
-                    analysis_material: 'Material 1',
-                    price: 50,
+                    analysis_type_price: 'Urocultivo automatizado',
+                    analysis_type_previous_condition:
+                      'Recolectar la primera orina de la mañana: realizar previo aseo genital, sacar la muestra del chorro intermedio en un frasco estéril de plástico y de boca ancha',
                   },
                   {
-                    analysis_id: 124,
-                    analysis_name: 'Análisis 2',
                     analysis_type_id: 2,
-                    analysis_material: 'Material 2',
-                    price: 75,
+                    analysis_type_price: 'Recuento automático de plaquetas',
+                    analysis_type_previous_condition:
+                      'No fumar ni trasnochar desde 48 antes',
+                  },
+                  {
+                    analysis_type_id: 3,
+                    analysis_type_price: 'Microalbuminuria semiautomatizada',
+                    analysis_type_previous_condition:
+                      '24 horas previas a la recolección de la muestra. recolectar en un recipiente para orina nuevo cualquier miccion de orina matutina el día a presentarse en el laboratorio.',
                   },
                 ],
               },
@@ -204,8 +202,7 @@ const getAllAnalysisDocs = {
       },
     },
   },
-}
-
+};
 const getAnalysisByIdDocs = {
   '/getAnalysis/{analysis_id}/': {
     get: {
@@ -233,11 +230,10 @@ const getAnalysisByIdDocs = {
                 results: 1,
                 data: [
                   {
-                    analysis_id: 123,
-                    analysis_name: 'Análisis 1',
-                    analysis_type_id: 1,
-                    analysis_material: 'Material 1',
-                    price: 50,
+                    analysis_type_id: 3,
+                    analysis_type_price: 'Microalbuminuria semiautomatizada',
+                    analysis_type_previous_condition:
+                      '24 horas previas a la recolección de la muestra. recolectar en un recipiente para orina nuevo cualquier miccion de orina matutina el día a presentarse en el laboratorio.',
                   },
                 ],
               },
@@ -270,11 +266,69 @@ const getAnalysisByIdDocs = {
       },
     },
   },
-}
+};
+const deleteAppointmentDocs = {
+  //   '/patient/{patient_id}/appointments/{appointment_id}': {
+  //     delete: {
+  //       summary: 'Delete an appointment',
+  //       tags: ['Patient'],
+  //       parameters: [
+  //         {
+  //           in: 'path',
+  //           name: 'patient_id',
+  //           required: true,
+  //           schema: {
+  //             type: 'integer',
+  //           },
+  //           description: 'Patient ID',
+  //         },
+  //         {
+  //           in: 'path',
+  //           name: 'appointment_id',
+  //           required: true,
+  //           schema: {
+  //             type: 'integer',
+  //           },
+  //           description: 'Appointment id to delete',
+  //         },
+  //       ],
+  //       requestBody: {
+  //         required: false,
+  //       },
+  //       responses: {
+  //         200: {
+  //           description: 'OK',
+  //           content: {
+  //             'application/json': {
+  //               example: {
+  //                 status: 'ok',
+  //                 message: 'deleted successfully',
+  //                 affectedRows: 1,
+  //               },
+  //             },
+  //           },
+  //         },
+  //         500: {
+  //           description: 'Server error',
+  //           content: {
+  //             'application/json': {
+  //               example: {
+  //                 status: 'error',
+  //                 code: 'E12345',
+  //                 message: 'Error processing the query',
+  //               },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+};
 
 module.exports = {
   newAppointmentDocs,
   getAppointmentsDocs,
   getAllAnalysisDocs,
   getAnalysisByIdDocs,
-}
+  deleteAppointmentDocs,
+};

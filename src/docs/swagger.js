@@ -1,11 +1,12 @@
-const swaggerJsDoc = require('swagger-jsdoc')
-const swaggerUi = require('swagger-ui-express')
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const {
   newAppointmentDocs,
   getAppointmentsDocs,
   getAllAnalysisDocs,
   getAnalysisByIdDocs,
-} = require('./docs.js')
+  deleteAppointmentDocs,
+} = require('./docs.js');
 
 const options = {
   definition: {
@@ -19,26 +20,27 @@ const options = {
     },
   },
   apis: ['./src/routes/*.js'],
-}
+};
 
-const swaggerSpec = swaggerJsDoc(options)
+const swaggerSpec = swaggerJsDoc(options);
 swaggerSpec.paths = {
   ...swaggerSpec.paths,
   ...newAppointmentDocs,
   ...getAppointmentsDocs,
   ...getAllAnalysisDocs,
   ...getAnalysisByIdDocs,
-}
+  ...deleteAppointmentDocs,
+};
 
 const swagger = (app, port) => {
-  app.use('/api/docs/v1', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
-  app.get('/api/docs/v1.json', (req, res) => {
-    res.setHeader('Content-Type', 'application/json')
-    res.send(swaggerSpec)
-  })
+  app.use('/api/docs/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.get('/api/docs.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+  });
   console.log(
     '📚 Documentation is available at https://clinic-lab-api.onrender.com/api/docs/v1/'
-  )
-}
+  );
+};
 
-module.exports = { swagger }
+module.exports = { swagger };
