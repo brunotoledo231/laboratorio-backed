@@ -71,7 +71,7 @@ export const getAllPersons = async(req,res,next) => {
         })
         
     } catch (error) {
-        res.status(500).json({
+        res.status(500).json({//sasas
             status: 'failed',
             payload: {
                 message:error.message,
