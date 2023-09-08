@@ -3,9 +3,21 @@ import pool from "../../utils/db.js"
 class Person {
     constructor(){}
     create = async(person) => {
-        const data = await pool.query('INSERT INTO Persons (first_name, last_name, dni, phone_number, address, birth_date, gender_id) VALUES (?, ?, ?, ?, ?, ?, ?)', [person.first_name, person.last_name, person.dni, person.phone_number, person.address, person.birth_date, person.gender_id]) 
+        const data = await pool.query(`INSERT INTO Persons (first_name, 
+            last_name,dni_type_id, dni, phone_number, address,postal_code,
+            medical_coverage,affiliate_number, birth_date, gender_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?,?)`, 
+            [
+                person.first_name, person.last_name,person.dni_type_id,
+                 person.dni, person.phone_number,person.postal_code,
+                 person.affiliate_number,person.medical_coverage, person.address,
+                 person.birth_date, person.gender_id
+            ]) 
         return data[0]
     }
+
+
+
     getAll = async() => {
         console.log('DAO CRUD getAll method called')
         const data = await pool.query('SELECT * FROM Persons')

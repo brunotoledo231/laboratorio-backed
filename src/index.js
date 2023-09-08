@@ -10,7 +10,7 @@ import swaggerSpecs from './utils/swagger.js';
 import config from './config/config.js';
 import { updateAnalysisType } from './controllers/analysisTypeController.js';
 import { getUserByEmail, getUserById, updateUser,deleteUserById } from './controllers/userController.js';
-import { updatePerson } from './controllers/personController.js';
+import { getAllPersons, updatePerson } from './controllers/personController.js';
 
 
 const app = express();
@@ -33,6 +33,7 @@ app.use('/api/users/inverseDelete/id/:id',deleteUserById)
 
 app.use('/api/persons', personsRoute);
 app.use('/api/persons/id/:id',updatePerson)
+app.use('api/persons',getAllPersons)
 
 
 //analysisTypeEndpoints

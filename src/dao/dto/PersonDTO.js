@@ -8,6 +8,10 @@ export default class personDTO {
         this.address = person.address
         this.birth_date = person.birth_date
         this.gender_id = person.gender_id
+        this.dni_type_id = person.dni_type_id
+        this.postal_code = person.postal_code
+        this.affiliate_number = person.affiliate_number
+        this.medical_coverage = person.medical_coverage
     }
    
 }
