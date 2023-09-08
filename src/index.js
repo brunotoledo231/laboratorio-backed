@@ -27,11 +27,13 @@ app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerSpecs))
 
 //userendpoints
 app.use('/api/users', usersRoute);
-app.use('/api/users/id/:id', getUserById);
-app.use('/api/users/email/:email',getUserByEmail)
-app.use('/api/users/email/:email',updateUser)//se cambio la ruta de put a patch
-app.use('/api/users/delete/id/:id',deleteUserById)
-app.use('/api/users/inverseDelete/id/:id',deleteUserById)
+
+
+// app.use('/api/users/id/:id', getUserById);
+// app.use('/api/users/email/:email',getUserByEmail)
+// app.use('/api/users/email/:email',updateUser)//se cambio la ruta de put a patch
+// app.use('/api/users/delete/id/:id',deleteUserById)
+// app.use('/api/users/inverseDelete/id/:id',deleteUserById)
 
 app.use('/api/persons', personsRoute);
 app.use('/api/persons/id/:id',updatePerson)
