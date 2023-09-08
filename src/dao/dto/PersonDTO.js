@@ -11,7 +11,7 @@ export default class personDTO {
         this.dni_type_id = person.dni_type_id
         this.postal_code = person.postal_code
         this.affiliate_number = person.affiliate_number
-        this.medical_coverage = person.medical_coverage
+        this.medical_coverages_id = person.medical_coverages_id
     }
    
 }
