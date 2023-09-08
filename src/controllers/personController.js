@@ -21,7 +21,11 @@ export const updatePerson = async (req, res, next) => {
         last_name: req.body.last_name,
         birth_date: req.body.birth_date,
         address: req.body.address,
-        phone_number: req.body.phone_number,       
+        postal_code: req.body.postal_code,
+        phone_number: req.body.phone_number,
+        medical_coverage: req.body.medical_coverage,
+        affiliate_number: req.body.affiliate_number,
+               
     };
 
     const parsedDate = parse(updatedPersonData.birth_date, 'dd-MM-yyyy', new Date());

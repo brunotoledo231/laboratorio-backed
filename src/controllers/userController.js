@@ -20,7 +20,10 @@ export const createUser = async(req,res,next) => {
         address: req.body.address,
         phone_number: req.body.phone_number,
         dni: req.body.dni,
-        gender_id: req.body.gender_id
+        gender_id: req.body.gender_id,
+        dni_type_id: req.body.dni_type_id,
+        postal_code: req.body.postal_code,
+        affiliate_number: req.body.affiliate_number
     }
     const userInfo = {
         email: req.body.email,
