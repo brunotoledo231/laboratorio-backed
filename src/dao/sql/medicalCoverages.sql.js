@@ -13,7 +13,19 @@ getAll = async() => {
     const data=await pool.query('select * from Medical_coverages')
     
     return data;
-    }   
+    }  
+
+getOneById=async(id)=>{
+    const data=await pool.query('select * from Medical_coverages where medical_coverages_id = ?',[id])
+    return data[0]
 }
+
+getOneByName=async(name)=>{
+    const data = await pool.query('select * from Medical_coverages where medical_coverage_name = ?',[name])
+    return data[0]
+}
+
+}
+
 
 export const medical_coverage = new MedicalCoverage()

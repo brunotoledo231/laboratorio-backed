@@ -12,8 +12,7 @@ import config from './config/config.js';
 import { updateAnalysisType } from './controllers/analysisTypeController.js';
 import { getUserByEmail, getUserById, updateUser,deleteUserById } from './controllers/userController.js';
 import { getAllPersons, updatePerson } from './controllers/personController.js';
-
-import { getAllMedicalCoverage } from './controllers/medicalCoverageController.js';
+import { getAllMedicalCoverage,getMedicalCoverageByName,getMedicalCoverageById } from './controllers/medicalCoverageController.js';
 
 
 const app = express();
@@ -41,7 +40,9 @@ app.use('api/persons',getAllPersons)
 //medical coverages
 
 app.use('/api/medicalcoverages',medicalCoverageRoute);
-app.use('/api/medicalcoverages',getAllMedicalCoverage)
+app.use('/api/medicalcoverages',getAllMedicalCoverage);
+app.use('/api/medicalcoverages/id/:id',getMedicalCoverageById)
+app.use('/api/medicalcoverages/name/:name',getMedicalCoverageByName)
 
 
 //analysisTypeEndpoints

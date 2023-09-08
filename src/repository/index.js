@@ -15,4 +15,4 @@ import { medical_coverage } from '../dao/sql/medicalCoverages.sql.js'
 export const UserService = new UserRepository(user)
 export const PersonService = new PersonRepository(person)
 export const AnalysisTypeService=new AnalysisTypeRepository(analysis_type)
-export const MedicalCoverageService = new  MedicalCoverageRepository(medical_coverage)
+export const MedicalCoverageService = new MedicalCoverageRepository(medical_coverage)

@@ -8,5 +8,14 @@ export default class MedicalCoverageRepository{
     getAllMedicalCoverage = async()=>{
         return await this.medicalCoverage.getAll()
     }
+
+    getOneMedicalCoverageById =async(id)=>{
+        return await this.medicalCoverage.getOneById(id)
+    }
+
+    getOneMedicalCoverageByName= async(name)=>{
+        return await this.medicalCoverage.getOneByName(name)
+    }
+    
 }
 
