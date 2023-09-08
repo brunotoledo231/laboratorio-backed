@@ -9,8 +9,9 @@ class Person {
             VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?,?)`, 
             [
                 person.first_name, person.last_name,person.dni_type_id,
-                 person.dni, person.phone_number,person.postal_code,
-                 person.affiliate_number,person.medical_coverages_id, person.address,
+                 person.dni, person.phone_number,person.address, person.postal_code,
+                 person.medical_coverages_id, 
+                 person.affiliate_number,
                  person.birth_date, person.gender_id
             ]) 
         return data[0]

@@ -13,6 +13,7 @@ export const createUser = async(req,res,next) => {
             payload: errors
         })
     }
+    console.log(req.body)
     const personInfo = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -50,6 +51,7 @@ export const createUser = async(req,res,next) => {
             payload: {user_id: data.insertId}
         })
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             status: 'failed',
             payload: {
