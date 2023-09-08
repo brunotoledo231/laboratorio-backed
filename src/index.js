@@ -4,6 +4,7 @@ import __dirname from './utils/projectDirname.js';
 import analysisTypeRoute from './routes/analysisType.route.js'
 import usersRoute from './routes/users.route.js'
 import personsRoute from './routes/persons.route.js'
+import medicalCoverageRoute from './routes/medicalCoverage.route.js'
 
 import swaggerUiExpress from "swagger-ui-express";
 import swaggerSpecs from './utils/swagger.js';
@@ -11,6 +12,8 @@ import config from './config/config.js';
 import { updateAnalysisType } from './controllers/analysisTypeController.js';
 import { getUserByEmail, getUserById, updateUser,deleteUserById } from './controllers/userController.js';
 import { getAllPersons, updatePerson } from './controllers/personController.js';
+
+import { getAllMedicalCoverage } from './controllers/medicalCoverageController.js';
 
 
 const app = express();
@@ -34,6 +37,11 @@ app.use('/api/users/inverseDelete/id/:id',deleteUserById)
 app.use('/api/persons', personsRoute);
 app.use('/api/persons/id/:id',updatePerson)
 app.use('api/persons',getAllPersons)
+
+//medical coverages
+
+app.use('/api/medicalcoverages',medicalCoverageRoute);
+app.use('/api/medicalcoverages',getAllMedicalCoverage)
 
 
 //analysisTypeEndpoints
