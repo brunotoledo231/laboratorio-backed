@@ -26,7 +26,7 @@ app.use(express.urlencoded({extended: true}))
 app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerSpecs))
 
 //userendpoints
-app.use('/api/users', usersRoute);
+app.use('/api/users', usersRoute);//prueba
 
 
 // app.use('/api/users/id/:id', getUserById);
