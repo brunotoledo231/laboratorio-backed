@@ -14,14 +14,9 @@ export default class UserRepository {
         return await this.user.create(newUser)
     }
     updateUser = async (userName, updatedUserData) => {
-        try {
-            const updated = await this.user.update(userName, updatedUserData);
-            return updated;
-        } catch (error) {
-            throw error;
-        }
+        const updated = await this.user.update(userName, updatedUserData);
+        return updated;
     };
-    
     getUserByEmail = async(email) => {
         return await this.user.getOneByEmail(email)
     }
@@ -32,7 +27,4 @@ export default class UserRepository {
         return await this.user.delete(id)
     }
 
-    inverseDeleteUserById = async(id) => {
-        return await this.user.inverseDelete(id)
-    }
 }

@@ -1,4 +1,4 @@
-import personDTO from '../dao/dto/PersonDTO.js'
+import {personDTO,  updatePersonDTO } from '../dao/dto/PersonDTO.js'
 
 export default class PersonRepository {
     constructor(person) {
@@ -17,13 +17,10 @@ export default class PersonRepository {
     getPersonById = async(id) => {
         return await this.person.getOneById(id)
     }
-    updatePerson=async(personId,updatedPerson)=>{
-        try{
-            const updated=await this.person.update(personId,updatedPerson);
-            return updated;
-        }catch(error){
-            throw error;
-        }
+    updatePerson=async(personId, currentPerson ,obj)=>{
+        const updatedPerson = {...currentPerson, ...obj}
+        const newPerson = new updatePersonDTO(updatedPerson)
+        return await this.person.update(personId, newPerson);
     }
 
    

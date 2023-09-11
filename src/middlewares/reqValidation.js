@@ -40,6 +40,8 @@ export const createUserValidator = [
     body('dni').notEmpty().withMessage('dni cant be empty!')//colocar rango de digitos de 7 a 8 digitos 
     .isNumeric().withMessage('dni must be a number!')
     .isLength({ min: 7, max: 8 }).withMessage('dni must be between 7 and 8 digits long'),
+    body('dni_type_id').notEmpty().withMessage('dni cant be empty!') 
+    .isNumeric().withMessage('dni_type_id must be a number!'),
     body('gender_id').notEmpty().withMessage('gender_id cant be empty!')
     .isNumeric().withMessage('gender_id must be a number!')
     .isIn([5,7,8,9]).withMessage('gender_id must be a valid number value from genders table!'),
